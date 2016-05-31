@@ -29,6 +29,14 @@ if($_POST && $_POST['submit']) {
 
         $result='<div class="alert alert-danger"><strong>There were error(s) in your form' . $error . '</strong></div>';
 
+    } else {
+
+
+        if( mail("jfluke717@gmail.com", "comment from the web", "Name: ".$_POST['name']." Email: ".$_POST['email']." Comment: ".$_POST['comment']."" )){
+
+            $result = "<div class='alert alert-success'>Message sent<div>";
+        };
+
     }
 }
 
@@ -90,7 +98,7 @@ mail($mailTo, $subject, $body, $headers);*/
 
                 <label for="name">Your Name:</label>
 
-                <input type="text" name="name" class="form-control" placeholder="Name here"/>
+                <input type="text" name="name" class="form-control" placeholder="Name here" value="<? echo $_POST['name'] ?>"/>
 
 
             </div>
@@ -99,7 +107,7 @@ mail($mailTo, $subject, $body, $headers);*/
 
                 <label for="name">Email:</label>
 
-                <input type="email" name="email" class="form-control" placeholder="Email here"/>
+                <input type="email" name="email" class="form-control" placeholder="Email here" value="<? echo $_POST['email'] ?>"/>
 
 
 
@@ -109,7 +117,7 @@ mail($mailTo, $subject, $body, $headers);*/
 
                 <label for="comment">Comment:</label>
 
-                <textarea class="form-control" name="comment" ></textarea>
+                <textarea class="form-control" name="comment" value= "<? echo $_POST['comment'] ?>"></textarea>
 
             </div>
 
