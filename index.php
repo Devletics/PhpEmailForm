@@ -1,13 +1,37 @@
 <?php
-
+require ('config.php');
+require ('database.php');
 require ('info.php');
 
 
 
+$database = new Database(); //new object
+
+if( isset($_POST['submit'])) {
+
+    $comment = $_POST['comment'];
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $state = $_POST['state'];
+
+    $query = "INSERT INTO information (comment, name, email, state) VALUES ('$comment', '$name', '$email', '$state')"; //this creates my query
+    $run = $database->insert($query); //
+    if($run) {
+        echo 'Submitted successfully';
+    }
+
+
+
+
+}
+
+
+$error="";
+$result="";
+
 if($_POST && $_POST['submit']) {
 
-    $error="";
-    $result="";
+
 
     $result='<div class="alert alert-success">Form submitted</div>';
     if(!$_POST['name']){
@@ -88,7 +112,7 @@ mail($mailTo, $subject, $body, $headers);*/
 <h1>Contract Form</h1>
 
         <?echo $result; ?>
-        <?echo $error;?>
+        <?echo $error; ?>
 
         <p class="lead">Please get in touch - I'll get back to you as soon as possible</p>
 
@@ -98,7 +122,7 @@ mail($mailTo, $subject, $body, $headers);*/
 
                 <label for="name">Your Name:</label>
 
-                <input type="text" name="name" class="form-control" placeholder="Name here" value="<? echo $_POST['name'] ?>"/>
+                <input type="text" name="name" class="form-control" placeholder="Name here" value=""/>
 
 
             </div>
@@ -107,7 +131,7 @@ mail($mailTo, $subject, $body, $headers);*/
 
                 <label for="name">Email:</label>
 
-                <input type="email" name="email" class="form-control" placeholder="Email here" value="<? echo $_POST['email'] ?>"/>
+                <input type="email" name="email" class="form-control" placeholder="Email here" value=""/>
 
 
 
@@ -117,7 +141,7 @@ mail($mailTo, $subject, $body, $headers);*/
 
                 <label for="comment">Comment:</label>
 
-                <textarea class="form-control" name="comment" value= "<? echo $_POST['comment'] ?>"></textarea>
+                <textarea class="form-control" name="comment" value= ""></textarea>
 
             </div>
 
@@ -126,7 +150,8 @@ mail($mailTo, $subject, $body, $headers);*/
                 <label for="states">States</label></ br></br>
                 <? foreach ($states as $abbreviation => $name ):?> <!-- This loops through my states -->
                 <label for="states"></br><? echo $name . '  <br/>'?></label></ br>
-                <input type="checkbox" class="states[]" value=""/>
+                <input type="checkbox" class="states[]" value="<?echo $name ?>" name="state"/>
+
                 <? endforeach;?>
 
             </div>
